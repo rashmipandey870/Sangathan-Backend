@@ -43,21 +43,4 @@ router.get("/departments", async (req, res) => {
   }
 });
 
-router.get("/teamByName/:teamName", async (req, res) => {
-  try {
-
-    const teamName = req.params.teamName.toUpperCase();
-
-    const trials = await TrialSchedule
-      .find({ teamName })   // use teamName
-      .sort({ createdAt: -1 })
-      .limit(1);
-
-    res.json(trials);
-
-  } catch (err) {
-    res.status(500).json({ message: "Error fetching trial" });
-  }
-});
-
 module.exports = router;

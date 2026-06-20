@@ -25,6 +25,21 @@ const fixtureSchema = new mongoose.Schema({
   venue: {
     type: String,
     default: "Venue not assigned"
+  },
+
+  winner: {
+    type: String,
+    default: ""
+  },
+
+  scoreA: {
+    type: String,
+    default: ""
+  },
+
+  scoreB: {
+    type: String,
+    default: ""
   }
 
 }, { timestamps: true });

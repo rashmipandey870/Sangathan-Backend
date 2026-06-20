@@ -56,7 +56,7 @@ exports.createTeam = async (req, res) => {
     });
 
   } catch (err) {
-    console.error("FULL ERROR : ");
+    console.error("FULL ERROR : ", err);
     res.status(500).json({ message: err.message });
   }
 };

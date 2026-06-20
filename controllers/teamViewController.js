@@ -19,9 +19,14 @@ exports.getTeamWithPlayers = async (req, res) => {
       });
     }
 
-    const players = await Student.find({
+    const query = {
       teamName: { $regex: new RegExp("^"+ teamName +"$","i")}
-    });
+    };
+    if (req.query.type) {
+      query.status = req.query.type.toUpperCase();
+    }
+
+    const players = await Student.find(query);
 
     res.json({
       captainName: team.captainName,

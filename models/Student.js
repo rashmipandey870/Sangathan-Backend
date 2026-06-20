@@ -11,8 +11,7 @@ const studentSchema = new mongoose.Schema({
 
   enrollment: {
     type: String,
-    uppercase: true,
-    unique: true
+    uppercase: true
   },
 
   department: {

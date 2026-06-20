@@ -51,13 +51,25 @@ const trialRoutes = require("./routes/trialRoutes");
 console.log("trialRoutes:", typeof trialRoutes);
 
 const adminRoutes = require("./routes/adminRoutes");
-console.log("adminRoutes:", typeof adminRoutes) ;
+console.log("adminRoutes:", typeof adminRoutes);
+
+const emailRoutes = require("./routes/emailRoutes");
+console.log("emailRoutes:", typeof emailRoutes);
+
+const profileRoutes = require("./routes/profileRoutes");
+console.log("profileRoutes:", typeof profileRoutes);
+
+const sportRoutes = require("./routes/sportRoutes");
+console.log("sportRoutes:", typeof sportRoutes);
 
 
 app.use("/api", teamRoutes);
 app.use("/api", studentRoutes);
 app.use("/api", captainRoutes);
 app.use("/api/trials", trialRoutes);
+app.use("/api/email", emailRoutes);
+app.use("/api", profileRoutes);
+app.use("/api", sportRoutes);
 app.use("/api", require("./routes/teamViewRoutes"));
 app.use("/api", require("./routes/selectionRoutes"));
 app.use("/api", require("./routes/editRoutes"));

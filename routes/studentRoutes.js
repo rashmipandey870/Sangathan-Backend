@@ -44,14 +44,26 @@ router.post("/register", async (req, res) => {
       });
     }
 
-    //  CHECK DUPLICATE STUDENT
-    const existingStudent = await Student.findOne({
+    //  CHECK IF ALREADY REGISTERED FOR THIS SPORT
+    const alreadyRegisteredForSport = await Student.findOne({
+      enrollment: enrollment.toUpperCase(),
+      sportId: Number(sportId)
+    });
+
+    if (alreadyRegisteredForSport) {
+      return res.status(400).json({
+        message: "Already registered for this sport"
+      });
+    }
+
+    //  CHECK MAXIMUM 2 SPORTS REGISTRATION CONSTRAINT
+    const registrationCount = await Student.countDocuments({
       enrollment: enrollment.toUpperCase()
     });
 
-    if (existingStudent) {
+    if (registrationCount >= 2) {
       return res.status(400).json({
-        message: "Student already registered"
+        message: "Student cannot register in more than 2 sports"
       });
     }
 
@@ -209,5 +221,22 @@ router.put("/student/edit/:id", async (req, res) => {
   }
 });
 
+
+// GET STUDENT STATUS BY EMAIL OR ENROLLMENT (DYNAMIC STATUS RETRIEVAL)
+router.get("/student/status/:identifier", async (req, res) => {
+  try {
+    const identifier = req.params.identifier.toUpperCase().trim();
+    const registrations = await Student.find({
+      $or: [
+        { enrollment: identifier },
+        { email: identifier.toLowerCase() }
+      ]
+    });
+    res.json(registrations);
+  } catch (err) {
+    console.error("GET STUDENT STATUS ERROR:", err);
+    res.status(500).json({ message: "Failed to fetch student status" });
+  }
+});
 
 module.exports = router;

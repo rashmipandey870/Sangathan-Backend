@@ -8,10 +8,8 @@ router.put("/reject-player/:id",controller.rejectPlayer);
 
 
 // UPDATE SELECTION (FRONTEND MATCH)
-
-router.post("/update", async (req, res) => {
+const updateSelectionHandler = async (req, res) => {
   try {
-
     const { studentId, status } = req.body;
 
     if (!studentId || !status) {
@@ -21,7 +19,7 @@ router.post("/update", async (req, res) => {
     }
 
     const student = await Student.findOneAndUpdate(
-      { _id: studentId },   // matches frontend
+      { _id: studentId },
       { status: status },
       { new: true }
     );
@@ -43,6 +41,10 @@ router.post("/update", async (req, res) => {
       message: "Selection failed"
     });
   }
-});
+};
+
+router.post("/selection/update", updateSelectionHandler);
+router.post("/selection/update-selection", updateSelectionHandler);
+router.post("/update", updateSelectionHandler);
 
 module.exports = router;
